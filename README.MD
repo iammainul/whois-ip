@@ -18,7 +18,11 @@ python whosisip.py -i <single-ip>
 python whosisip.py -l <ip-list.txt>
 ```
 
----
+### Requirements
+```
+pip install IPWhois
+```
+
 
 ### Modification
 Will work on making it a multitrheaded program. Please feel free to contribute.
