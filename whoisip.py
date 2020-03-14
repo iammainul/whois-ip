@@ -6,13 +6,13 @@ import sys
 #Usages
 if len(sys.argv)!= 3:
 	print ("usages:")
-	print ("python3 whosisip.py -i <single-ip>")
-	print ("python3 whosisip.py -l <list-of-ip>")
+	print ("python whosisip.py -i <single-ip>")
+	print ("python whosisip.py -l <list-of-ip>")
 	sys.exit(1)
 
 #Output File
 outfile = csv.writer(open("output.csv", "wb"))
-outfile.writerow(['IP', 'Name', 'Country', 'City', 'Description', 'Email'])
+outfile.writerow(['IP', 'Name', 'Country', 'City', 'Description'])
 
 #Single IP
 if (sys.argv[1] == '-i'):
@@ -28,8 +28,8 @@ elif (sys.argv[1] == '-l'):
 		ip = ip.strip('\n') #Removing any new line character from the end of line
 		obj = IPWhois(ip)
 		out = obj.lookup_whois()
-		#print (out)
 
+		#writing the output into a csv-file
 		ip = bytes(ip)
 		name = out["nets"][0]['name']
 		name = bytes(name)
@@ -39,8 +39,6 @@ elif (sys.argv[1] == '-l'):
 		city = bytes(city)
 		description = out["nets"][0]['description']
 		description = bytes(description)
-		#email = out["nets"][0]['email']
-		#email = bytes(email)
 
 		outfile.writerow([ip, name, country, city, description]) 
 
