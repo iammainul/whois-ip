@@ -26,6 +26,7 @@ elif (sys.argv[1] == '-l'):
 	ip_list = open(fp, "r")
 	for ip in ip_list:
 		ip = ip.strip('\n') #Removing any new line character from the end of line
+		ip = ip.strip('\r')
 		obj = IPWhois(ip)
 		out = obj.lookup_whois()
 
