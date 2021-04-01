@@ -8,7 +8,7 @@ The output currently only shows these following details:
 - Name
 - Country
 - City
-- Description
+- Registrar
 
 ---
 
@@ -20,7 +20,7 @@ python whosisip.py -l <ip-list.txt>
 
 ### Requirements
 ```
-pip install IPWhois
+pip install python-whois
 ```
 
 
