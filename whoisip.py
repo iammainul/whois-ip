@@ -1,7 +1,6 @@
-from ipwhois import IPWhois
+import whois
 import csv
 import sys
-
 
 #Usages
 if len(sys.argv)!= 3:
@@ -10,16 +9,17 @@ if len(sys.argv)!= 3:
 	print ("python whosisip.py -l <list-of-ip>")
 	sys.exit(1)
 
-#Output File
-outfile = csv.writer(open("output.csv", "wb"))
-outfile.writerow(['IP', 'Name', 'Country', 'City', 'Description'])
+outfile = csv.writer(open("output.csv", "w"))
+outfile.writerow(['IP', 'Registrar', 'Email', 'Name', 'Country', 'City'])
+
+i = 0
 
 #Single IP
 if (sys.argv[1] == '-i'):
 	ip = sys.argv[2]
-	obj = IPWhois(ip)
-	out = obj.lookup_whois()
-	print (out)
+	w = whois.whois(ip)
+	print (w)
+
 #Multiple IP
 elif (sys.argv[1] == '-l'):
 	fp = sys.argv[2]
@@ -27,20 +27,15 @@ elif (sys.argv[1] == '-l'):
 	for ip in ip_list:
 		ip = ip.strip('\n') #Removing any new line character from the end of line
 		ip = ip.strip('\r')
-		obj = IPWhois(ip)
-		out = obj.lookup_whois()
+		w = whois.whois(ip)
+#getting the variables to write on csv		
+		registrar = w.registrar
+		name = w.name
+		country = w.country
+		city = w.city
+		email = w.emails
+		outfile.writerow([ip, registrar, email, name, country, city]) 
+		i= i+1
+		print (i)
 
-		#writing the output into a csv-file
-		ip = bytes(ip)
-		name = out["nets"][0]['name']
-		name = bytes(name)
-		country = out["nets"][0]['country']
-		country = bytes(country)
-		city = out["nets"][0]['city']
-		city = bytes(city)
-		description = out["nets"][0]['description']
-		description = bytes(description)
-
-		outfile.writerow([ip, name, country, city, description]) 
-
-print ("Done!")
+print ('Done')
